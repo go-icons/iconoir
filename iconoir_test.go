@@ -10,7 +10,7 @@ import (
 )
 
 func TestIconKnown(t *testing.T) {
-	for _, n := range []string{"zoom-in", "folder", "undo", "settings", "nav-arrow-left"} {
+	for _, n := range []string{"zoom-in", "zoom-out", "folder", "undo", "settings", "nav-arrow-left", "expand-lines", "page"} {
 		s := Icon(n)
 		if s == "" || !strings.Contains(s, "<svg") {
 			t.Errorf("Icon(%q) returned no SVG", n)
@@ -32,13 +32,12 @@ func TestIconUnknown(t *testing.T) {
 
 func TestNames(t *testing.T) {
 	names := Names()
-	if len(names) < 10 {
-		t.Fatalf("expected a curated set, got %d names", len(names))
+	if len(names) < 500 {
+		t.Fatalf("expected the full regular set, got %d names", len(names))
 	}
-	// Sorted, and every listed name resolves.
 	for i, n := range names {
 		if i > 0 && names[i-1] > n {
-			t.Fatalf("Names() not sorted at %d: %q > %q", i, names[i-1], n)
+			t.Fatalf("Names() not sorted at %d", i)
 		}
 		if !Has(n) {
 			t.Errorf("listed name %q does not resolve", n)
