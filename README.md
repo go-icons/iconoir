@@ -1,5 +1,10 @@
 # iconoir
 
+[![ci](https://github.com/go-icons/iconoir/actions/workflows/ci.yml/badge.svg)](https://github.com/go-icons/iconoir/actions/workflows/ci.yml)
+![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
+[![Go Reference](https://pkg.go.dev/badge/github.com/go-icons/iconoir.svg)](https://pkg.go.dev/github.com/go-icons/iconoir)
+[![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
+
 The [Iconoir](https://iconoir.com) icon set (MIT), embedded as SVG and keyed by
 the icon's own name — for pure-Go UIs that render their own icons.
 
