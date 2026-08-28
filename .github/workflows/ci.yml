@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GOWORK: "off"
+  CGO_ENABLED: "0"
+
+jobs:
+  test:
+    name: Build + test + 100% coverage gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.4"
+          check-latest: true
+          cache: true
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l .)
+          [ -z "$unformatted" ] || { echo "::error::not gofmt-clean:"; echo "$unformatted"; gofmt -d $unformatted; exit 1; }
+      - name: go vet
+        run: go vet ./...
+      - name: Test with 100% coverage gate
+        run: |
+          go test -coverprofile=coverage.out ./...
+          go tool cover -func=coverage.out
+          below=$(go tool cover -func=coverage.out | awk '$NF != "100.0%"')
+          if [ -n "$below" ]; then echo "::error::coverage below 100% on:"; echo "$below"; exit 1; fi
