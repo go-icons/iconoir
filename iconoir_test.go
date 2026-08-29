@@ -11,9 +11,9 @@ import (
 
 func TestIconKnown(t *testing.T) {
 	for _, n := range []string{"zoom-in", "zoom-out", "folder", "undo", "settings", "nav-arrow-left", "expand-lines", "page"} {
-		s := SVG(n)
+		s := Icon(n)
 		if s == "" || !strings.Contains(s, "<svg") {
-			t.Errorf("SVG(%q) returned no SVG", n)
+			t.Errorf("Icon(%q) returned no SVG", n)
 		}
 		if !Has(n) {
 			t.Errorf("Has(%q) = false", n)
@@ -22,7 +22,7 @@ func TestIconKnown(t *testing.T) {
 }
 
 func TestIconUnknown(t *testing.T) {
-	if SVG("definitely-not-an-icon") != "" {
+	if Icon("definitely-not-an-icon") != "" {
 		t.Error("unknown icon should return an empty string")
 	}
 	if Has("definitely-not-an-icon") {
